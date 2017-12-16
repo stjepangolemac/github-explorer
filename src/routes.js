@@ -1,13 +1,9 @@
 import { StackNavigator } from 'react-navigation'
 
-import Home from './screens/Home'
+import Search from './screens/Search'
+import UserDetails from './screens/UserDetails'
 
 export default StackNavigator({
-  Home: { screen: Home },
+  Search: { screen: Search },
+  User: { screen: UserDetails },
 })
-
-const foo = {
-  a: 1,
-  b: 2,
-  c: 3,
-}
