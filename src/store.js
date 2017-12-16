@@ -1,8 +1,8 @@
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 
-import example from "./modules/example";
+import example from './modules/example'
 
 export default createStore({
-  example
-});
+  example,
+})
