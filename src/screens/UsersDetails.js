@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 
 import Label from '../components/Label'
 import ScreenContainer from '../components/ScreenContainer'
 import ContributorList from '../components/ContributorList'
+import ErrorText from '../components/ErrorText'
 
 import { selectors as reposSelectors } from '../modules/repos'
 import {
@@ -16,21 +17,32 @@ import {
 
 class UsersDetails extends Component {
   componentDidMount() {
-    const { getCommits, repo } = this.props
+    const { resetCommits, getCommits, repo } = this.props
 
+    resetCommits()
     getCommits(repo.id)
   }
 
-  render() {
-    const { navigation, repo, contributors } = this.props
+  onMorePress = () => {
+    this.props.getNextPage()
+  }
 
-    console.log(this.props.commits)
+  render() {
+    const {
+      navigation,
+      repo,
+      contributors,
+      getNextPage,
+      commitsError,
+    } = this.props
 
     return (
       <ScreenContainer>
-        <Text>UsersDetails {navigation.state.params.id}</Text>
-        <Label>Owner:</Label>
-        <Text>{repo.owner.login}</Text>
+        {commitsError && <ErrorText>{commitsError}</ErrorText>}
+        <View style={styles.panel}>
+          <Label>Owner:</Label>
+          <Text>{repo.owner.login}</Text>
+        </View>
         <Label>Contributors:</Label>
         <ContributorList contributors={contributors} />
       </ScreenContainer>
@@ -41,16 +53,33 @@ class UsersDetails extends Component {
 UsersDetails.propTypes = {
   repo: PropTypes.any.isRequired,
   getCommits: PropTypes.func.isRequired,
-  contributors: PropTypes.array.isRequired,
+  getNextPage: PropTypes.func.isRequired,
+  commitsError: PropTypes.string,
 }
+
+const styles = StyleSheet.create({
+  panel: {
+    marginBottom: 20,
+  },
+  more: {
+    bottom: 20,
+  },
+})
 
 const connectedUsersDetails = connect(
   (state, ownProps) => ({
     repo: reposSelectors.repoById(ownProps.navigation.state.params.id)(state),
-    contributors: commitsSelectors.contributors(state),
+    commitsError: commitsSelectors.error(state),
   }),
   dispatch =>
-    bindActionCreators({ getCommits: commitsActions.getRequest }, dispatch)
+    bindActionCreators(
+      {
+        resetCommits: commitsActions.resetCommits,
+        getCommits: commitsActions.getRequest,
+        getNextPage: commitsActions.nextPageRequest,
+      },
+      dispatch
+    )
 )(UsersDetails)
 
 export default connectedUsersDetails

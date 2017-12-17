@@ -1,7 +1,13 @@
-import { all, put, throttle } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import { call, all, put, takeLatest } from 'redux-saga/effects'
 import { createSelector } from 'reselect'
 
-import { prefixConstants, makeActions, defaultInitialState, checkError } from '../utils'
+import {
+  prefixConstants,
+  makeActions,
+  defaultInitialState,
+  checkError,
+} from '../utils'
 import { ghApiUrl } from '../config'
 
 export const constants = prefixConstants({
@@ -42,6 +48,7 @@ export const selectors = {
 
 function* getWorker({ payload }) {
   try {
+    yield call(delay, 500)
     const q = payload && `q=${payload.keywords.join('+')}`
 
     const response = yield fetch(`${ghApiUrl}search/repositories?${q || ''}`)
@@ -56,5 +63,5 @@ function* getWorker({ payload }) {
 }
 
 export function* saga() {
-  yield all([throttle(1000, constants.SEARCH_REQUEST, getWorker)])
+  yield all([takeLatest(constants.SEARCH_REQUEST, getWorker)])
 }

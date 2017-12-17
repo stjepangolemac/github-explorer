@@ -18,7 +18,8 @@ class Search extends Component {
   }
 
   onInputChange = value => {
-    this.props.searchRepos({ keywords: value.trim().split(' ') })
+    value.length &&
+      this.props.searchRepos({ keywords: value.trim().split(' ') })
   }
 
   onRepoPress = id => {

@@ -30,6 +30,9 @@ export const defaultInitialState = {
   data: [],
   loading: false,
   error: null,
+  next: null,
+  last: null,
+  blocked: false,
 }
 
 export function checkError(response) {
@@ -43,4 +46,30 @@ export function uniqueValues(arr) {
   return arr.filter((value, index, self) => {
     return self.indexOf(value) === index
   })
+}
+
+export function getNextPageUrl(response) {
+  const link = response.headers.map.link
+
+  if (link) {
+    const temp = link[0].split(',')[0]
+    const nextLink = temp.slice(temp.indexOf('<') + 1, temp.indexOf('>'))
+
+    return nextLink
+  }
+
+  return undefined
+}
+
+export function getLastPageUrl(response) {
+  const link = response.headers.map.link
+
+  if (link) {
+    const temp = link[0].split(',')[1]
+    const nextLink = temp.slice(temp.indexOf('<') + 1, temp.indexOf('>'))
+
+    return nextLink
+  }
+
+  return undefined
 }

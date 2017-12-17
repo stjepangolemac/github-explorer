@@ -18,8 +18,7 @@ ContributorListItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
 })
 

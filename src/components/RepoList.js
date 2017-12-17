@@ -20,6 +20,7 @@ function RepoList(props) {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.list}
         data={props.repos}
         renderItem={renderItem(props)}
         keyExtractor={item => item.id}
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 5,
   },
+  list: { height: 500 },
 })
 
 export default RepoList
