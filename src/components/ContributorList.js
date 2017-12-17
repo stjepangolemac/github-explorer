@@ -3,38 +3,32 @@ import PropTypes from 'prop-types'
 
 import { StyleSheet, View, FlatList, Text } from 'react-native'
 
-import RepoListItem from './RepoListItem'
+import ContributorListItem from './ContributorListItem'
 
 function renderItem(props) {
   return ({ item }) => {
-    return (
-      <RepoListItem
-        label={item.full_name}
-        onPress={() => props.onItemPress(item.id)}
-      />
-    )
+    return <ContributorListItem label={item} />
   }
 }
 
-function RepoList(props) {
+function ContributorList(props) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={props.repos}
+        data={props.contributors}
         renderItem={renderItem(props)}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item}
       />
     </View>
   )
 }
 
 FlatList.propTypes = {
-  repos: PropTypes.arrayOf(
+  contributors: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
     })
   ),
-  onItemPress: PropTypes.func,
 }
 
 const styles = StyleSheet.create({
@@ -43,4 +37,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default RepoList
+export default ContributorList

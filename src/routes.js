@@ -1,9 +1,9 @@
 import { StackNavigator } from 'react-navigation'
 
 import Search from './screens/Search'
-import UserDetails from './screens/UserDetails'
+import UsersDetails from './screens/UsersDetails'
 
 export default StackNavigator({
   Search: { screen: Search },
-  User: { screen: UserDetails },
+  Users: { screen: UsersDetails },
 })
