@@ -58,12 +58,8 @@ UsersDetails.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  panel: {
-    marginBottom: 20,
-  },
-  more: {
-    bottom: 20,
-  },
+  panel: { marginBottom: 20 },
+  more: { bottom: 20 },
 })
 
 const connectedUsersDetails = connect(

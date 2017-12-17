@@ -2,14 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Text,
-  Button,
-  ActivityIndicator,
-} from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 
 import ContributorListItem from './ContributorListItem'
 

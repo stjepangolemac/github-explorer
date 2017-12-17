@@ -48,11 +48,11 @@ export function uniqueValues(arr) {
   })
 }
 
-export function getNextPageUrl(response) {
+function getPageUrl(response, index) {
   const link = response.headers.map.link
 
   if (link) {
-    const temp = link[0].split(',')[0]
+    const temp = link[0].split(',')[index]
     const nextLink = temp.slice(temp.indexOf('<') + 1, temp.indexOf('>'))
 
     return nextLink
@@ -61,15 +61,10 @@ export function getNextPageUrl(response) {
   return undefined
 }
 
+export function getNextPageUrl(response) {
+  return getPageUrl(response, 0)
+}
+
 export function getLastPageUrl(response) {
-  const link = response.headers.map.link
-
-  if (link) {
-    const temp = link[0].split(',')[1]
-    const nextLink = temp.slice(temp.indexOf('<') + 1, temp.indexOf('>'))
-
-    return nextLink
-  }
-
-  return undefined
+  return getPageUrl(response, 1)
 }

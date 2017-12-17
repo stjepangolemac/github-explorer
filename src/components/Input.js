@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { StyleSheet, TextInput } from 'react-native'
 
 function Input(props) {
-  const { placeholder, onChange } = props;
+  const { placeholder, onChange } = props
 
   return (
     <TextInput
